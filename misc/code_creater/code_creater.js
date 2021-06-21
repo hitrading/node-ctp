@@ -2,6 +2,7 @@ const process = require('process')
 const iconvlite = require('iconv-lite')
 const assert = require('assert')
 const fs = require('fs')
+const path = require('path')
 
 /* -----------------------------------------------------------------------------
  * 通用生成器
@@ -19,7 +20,7 @@ class CxxNodeTypeMap {
 
   _parse () {
     const lines = iconvlite.decode(fs.readFileSync(
-      '../../ctp_api/include/ThostFtdcUserApiDataType.h'), 'gbk').split(
+      path.join(__dirname, '../../ctp_api/include/ThostFtdcUserApiDataType.h')), 'gbk').split(
       '\n')
     for (let line of lines) {
       line = line.trim()
@@ -266,7 +267,7 @@ class APIDefineGenerator {
   `
 
     const lines = iconvlite.decode(fs.readFileSync(
-      '../../ctp_api/include/ThostFtdcUserApiStruct.h'), 'gbk').split(
+      path.join(__dirname, '../../ctp_api/include/ThostFtdcUserApiStruct.h')), 'gbk').split(
       '\n')
 
     let structStart = false
@@ -693,7 +694,7 @@ class SPIDefineGenerator {
     let body = `if (${dataName}) {`
 
     const lines = iconvlite.decode(fs.readFileSync(
-      '../../ctp_api/include/ThostFtdcUserApiStruct.h'), 'gbk').split(
+      path.join(__dirname, '../../ctp_api/include/ThostFtdcUserApiStruct.h')), 'gbk').split(
       '\n')
 
     let structStart = false
@@ -954,28 +955,28 @@ function generateSpi (headerPath, addonClassName, spiClassName) {
 }
 
 function generateMdApi () {
-  generateApi('../../ctp_api/include/ThostFtdcMdApi.h', 'CtpMd',
+  generateApi(path.join(__dirname, '../../ctp_api/include/ThostFtdcMdApi.h'), 'CtpMd',
     'CThostFtdcMdApi')
 }
 
 function generateTdApi () {
-  generateApi('../../ctp_api/include/ThostFtdcTraderApi.h', 'CtpTd',
+  generateApi(path.join(__dirname, '../../ctp_api/include/ThostFtdcTraderApi.h'), 'CtpTd',
     'CThostFtdcTraderApi')
 }
 
 function generateMdSpi () {
-  generateSpi('../../ctp_api/include/ThostFtdcMdApi.h', 'CtpMd',
+  generateSpi(path.join(__dirname, '../../ctp_api/include/ThostFtdcMdApi.h'), 'CtpMd',
     'CThostFtdcMdSpi')
 }
 
 function generateTdSpi () {
-  generateSpi('../../ctp_api/include/ThostFtdcTraderApi.h', 'CtpTd',
+  generateSpi(path.join(__dirname, '../../ctp_api/include/ThostFtdcTraderApi.h'), 'CtpTd',
     'CThostFtdcTraderSpi')
 }
 
 function generateDataType () {
   const lines = iconvlite.decode(fs.readFileSync(
-    '../../ctp_api/include/ThostFtdcUserApiDataType.h'), 'gbk').split(
+    path.join(__dirname, '../../ctp_api/include/ThostFtdcUserApiDataType.h')), 'gbk').split(
     '\n')
 
   let commentCache = []
